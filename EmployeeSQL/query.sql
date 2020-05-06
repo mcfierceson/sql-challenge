@@ -20,15 +20,31 @@ JOIN employee AS employee
 JOIN departments AS dept
   ON dept_employees.department_id = dept.department_id
   
+--Get employees named Hercules with B starting last name
 SELECT first_name,last_name,sex
 FROM employee
 WHERE first_name = 'Hercules' 
 AND last_name LIKE 'B%'
 
-SELECT employee_id AS id, department_id
-FROM dept_employees
+--Get employees from Sales dept.
+SELECT e.employee_id,e.last_name,e.first_name,d.department_name 
+FROM employee AS e 
+JOIN dept_employees AS de
+ON (e.employee_id = de.employee_id)
+JOIN departments AS d
+ON (de.department_id = d.department_id)
+WHERE d.department_name = 'Sales'
 
-
+--Get employees from Sales and Development depts.
+SELECT e.employee_id,e.last_name,e.first_name,d.department_name 
+FROM employee AS e 
+JOIN dept_employees AS de
+ON (e.employee_id = de.employee_id)
+JOIN departments AS d
+ON (de.department_id = d.department_id)
+WHERE d.department_name = 'Sales'
+OR d.department_name = 'Development'
+ORDER BY d.department_name
 
 --Count of employees with same last name in descending order
 SELECT last_name, COUNT(last_name) AS "last name count"
